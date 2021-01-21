@@ -6,4 +6,10 @@
 //  Copyright © 2021 Vignesh. All rights reserved.
 //
 
-import Foundation
+enum AppConstants {
+
+    // XMPP CONFIG
+    public static let xmppDomain = "stun.joiint.com"
+    public static let xmppPort: UInt16 = 5222
+    
+}
