@@ -156,4 +156,10 @@ extension WeatherListViewController: UITableViewDelegate, UITableViewDataSource 
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = WeatherDetailViewController()
+        viewController.selectedData = weatherListData[indexPath.item]
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }

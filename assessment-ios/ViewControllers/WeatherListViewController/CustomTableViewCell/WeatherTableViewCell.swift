@@ -12,11 +12,11 @@ class WeatherTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    fileprivate var backgroundContainerView: UIView!
-    fileprivate var weatherStatusImageView: UIImageView!
-    fileprivate var weatherStatusLable: UILabel!
-    fileprivate var countryTitleLable: UILabel!
-    fileprivate var temperatureLable: UILabel!
+    private var backgroundContainerView: UIView!
+    private var weatherStatusImageView: UIImageView!
+    private var weatherStatusLabel: UILabel!
+    private var countryTitleLabel: UILabel!
+    private var temperatureLabel: UILabel!
     
     fileprivate var hasSetupConstraints: Bool = false
 
@@ -36,8 +36,8 @@ class WeatherTableViewCell: UITableViewCell {
     
     func loadData(data: List) {
 
-        self.countryTitleLable.text = data.name.uppercased()
-        self.weatherStatusLable.text = data.weather.first?.main.capitalized
+        self.countryTitleLabel.text = data.name.uppercased()
+        self.weatherStatusLabel.text = data.weather.first?.main.capitalized
         
         switch data.weather.first?.main.lowercased() {
         case AppConstants.WeatherType.clouds.rawValue:
@@ -55,14 +55,14 @@ class WeatherTableViewCell: UITableViewCell {
         let formatter = MeasurementFormatter()
         let measurement = Measurement(value: data.main.temp, unit: UnitTemperature.fahrenheit)
         let temperature = formatter.string(from: measurement)
-        self.temperatureLable.text = temperature
+        self.temperatureLabel.text = temperature
     }
     
     // MARK: - Private methods
     
     // MARK: - UI and Constraints methods
     
-    fileprivate func setupViews() {
+    private func setupViews() {
 
         let backgroundContainerView = UIView()
         backgroundContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,12 +102,12 @@ class WeatherTableViewCell: UITableViewCell {
 
         self.backgroundContainerView = backgroundContainerView
         self.weatherStatusImageView = weatherStatusImageView
-        self.countryTitleLable = countryTitleLable
-        self.weatherStatusLable = weatherStatusLable
-        self.temperatureLable = temperatureLable
+        self.countryTitleLabel = countryTitleLable
+        self.weatherStatusLabel = weatherStatusLable
+        self.temperatureLabel = temperatureLable
     }
     
-    fileprivate func setupConstraints() {
+    private func setupConstraints() {
 
         NSLayoutConstraint.activate([
 
@@ -122,19 +122,19 @@ class WeatherTableViewCell: UITableViewCell {
             weatherStatusImageView.widthAnchor.constraint(equalToConstant: 40),
             weatherStatusImageView.heightAnchor.constraint(equalToConstant: 40),
             
-            weatherStatusLable.topAnchor.constraint(equalTo: weatherStatusImageView.bottomAnchor, constant: 0),
-            weatherStatusLable.leftAnchor.constraint(equalTo: weatherStatusImageView.leftAnchor),
-            weatherStatusLable.rightAnchor.constraint(equalTo: countryTitleLable.leftAnchor),
-            weatherStatusLable.bottomAnchor.constraint(equalTo: backgroundContainerView.bottomAnchor, constant: -5),
+            weatherStatusLabel.topAnchor.constraint(equalTo: weatherStatusImageView.bottomAnchor, constant: 0),
+            weatherStatusLabel.leftAnchor.constraint(equalTo: weatherStatusImageView.leftAnchor),
+            weatherStatusLabel.rightAnchor.constraint(equalTo: countryTitleLabel.leftAnchor),
+            weatherStatusLabel.bottomAnchor.constraint(equalTo: backgroundContainerView.bottomAnchor, constant: -5),
 
-            countryTitleLable.centerYAnchor.constraint(equalTo: backgroundContainerView.centerYAnchor, constant: 0),
-            countryTitleLable.leftAnchor.constraint(equalTo: weatherStatusImageView.rightAnchor, constant: 20),
-            countryTitleLable.rightAnchor.constraint(equalTo: temperatureLable.leftAnchor),
+            countryTitleLabel.centerYAnchor.constraint(equalTo: backgroundContainerView.centerYAnchor, constant: 0),
+            countryTitleLabel.leftAnchor.constraint(equalTo: weatherStatusImageView.rightAnchor, constant: 20),
+            countryTitleLabel.rightAnchor.constraint(equalTo: temperatureLabel.leftAnchor),
             
-            temperatureLable.centerYAnchor.constraint(equalTo: backgroundContainerView.centerYAnchor),
-            temperatureLable.widthAnchor.constraint(equalToConstant: 70),
-            temperatureLable.heightAnchor.constraint(equalToConstant: 40),
-            temperatureLable.rightAnchor.constraint(equalTo: backgroundContainerView.rightAnchor, constant: -20),
+            temperatureLabel.centerYAnchor.constraint(equalTo: backgroundContainerView.centerYAnchor),
+            temperatureLabel.widthAnchor.constraint(equalToConstant: 70),
+            temperatureLabel.heightAnchor.constraint(equalToConstant: 40),
+            temperatureLabel.rightAnchor.constraint(equalTo: backgroundContainerView.rightAnchor, constant: -20),
         ])
     }
     
