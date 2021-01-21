@@ -7,5 +7,6 @@ target 'assessment-ios' do
 
   # Pods for assessment-ios
   pod 'XMPPFramework'
+  pod 'Alamofire'
 
 end
