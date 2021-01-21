@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     private var jidTextField = UITextField()
     private var passwordTextField = UITextField()
     private weak var loginButton: UIButton!
+    private weak var titleLabel: UILabel!
     var xmppController: XMPPController!
     private var activityIndicator: UIActivityIndicatorView!
 
@@ -27,6 +28,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationBar()
         setupViews()
         
         // Do any additional setup after loading the view.
@@ -69,18 +71,32 @@ class LoginViewController: UIViewController {
                                       handler:  { _ in
                                         
                                         if isUserConneted {
-                                            /*let weatherViewController = WeatherListViewController()
-                                            self.navigationController?.pushViewController(weatherViewController, animated: true)*/
+                                            let weatherViewController = WeatherListViewController()
+                                            self.navigationController?.pushViewController(weatherViewController, animated: true)
                                         }
           
         }))
         self.present(alert, animated: true)
     }
     
+    private func setupNavigationBar() {
+        self.navigationController?.isNavigationBarHidden = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: self, action: nil)
+    }
+    
     // MARK: - UI and Constraints methods
 
     private func setupViews() {
         view.backgroundColor = .white
+
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = "Connect with \nXMPP Server"
+        titleLabel.textColor = .black
+        titleLabel.font = UIFont.systemFont(ofSize: 30)
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
         
         let jidTextField = UITextField()
         jidTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -124,11 +140,13 @@ class LoginViewController: UIViewController {
         activityIndicator.style = UIActivityIndicatorView.Style.medium
         activityIndicator.color = .gray
         
+        self.view.addSubview(titleLabel)
         self.view.addSubview(jidTextField)
         self.view.addSubview(passwordTextField)
         self.view.addSubview(loginButton)
         self.view.addSubview(activityIndicator)
 
+        self.titleLabel = titleLabel
         self.jidTextField = jidTextField
         self.passwordTextField = passwordTextField
         self.loginButton = loginButton
@@ -152,6 +170,11 @@ class LoginViewController: UIViewController {
             jidTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50),
             jidTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -50),
             jidTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            titleLabel.bottomAnchor.constraint(equalTo: self.jidTextField.topAnchor, constant: -30),
+            titleLabel.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 40),
+            titleLabel.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -40),
+            titleLabel.heightAnchor.constraint(equalToConstant: 100),
                         
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 40),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -183,7 +206,7 @@ extension LoginViewController: XMPPStreamDelegate {
     func xmppStreamDidAuthenticate(_ sender: XMPPStream) {
         print("XMPP => Success \(sender.hostName ?? "")")
         self.activityIndicator.stopAnimating()
-        self.showAlert(title: "XMPP", message: "User Authenticated and Connected with \(sender.hostName ?? "HOST")")
+        self.showAlert(title: "XMPP", message: "User Authenticated and Connected with \(sender.hostName ?? "HOST")", isUserConneted: true)
     }
     
     func xmppStream(_ sender: XMPPStream, didNotAuthenticate error: DDXMLElement) {

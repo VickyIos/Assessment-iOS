@@ -21,6 +21,7 @@ class WeatherListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationBar()
         setupViews()
         
         // Do any additional setup after loading the view.
@@ -32,15 +33,21 @@ class WeatherListViewController: UIViewController {
     
     // MARK: - Private methods
     
+    private func setupNavigationBar() {
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        self.title = "Weather List"
+    }
+    
     // MARK: - UI and Constraints methods
 
-    fileprivate func setupViews() {
+    private func setupViews() {
         view.backgroundColor = .white
 
         setupConstraints()
     }
 
-    fileprivate func setupConstraints() {
+    private func setupConstraints() {
         
     }
 }
