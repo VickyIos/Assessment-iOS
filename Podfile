@@ -6,5 +6,6 @@ target 'assessment-ios' do
   use_frameworks!
 
   # Pods for assessment-ios
+  pod 'XMPPFramework'
 
 end
